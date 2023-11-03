@@ -1,74 +1,50 @@
 #include "binary_trees.h"
-bst_t *recurse_for_bst_insert(bst_t *tree, int value);
+
 /**
- * bst_insert - insert node into BST
- * @tree: pointer to root of tree
- * @value: value to stored in inserted node
- *
- * Return: pointer to inserted node; NULL on failure
+ * bst_insert -function to inserts a value in a BST
+ * @tree: double pointer to the root node
+ * @value: value to store in the node to be inserted
+ * If the address stored in tree is NULL,
+ * the created node must become the root node.
+ * Return: pointer to the created node || NULL on failure
  */
+
+
 bst_t *bst_insert(bst_t **tree, int value)
 {
-	bst_t *new_node = NULL, *parent = NULL;
+	bst_t *new, *tree_2;
 
-	if (tree == NULL)
-		return (NULL);
-
-	/* if tree doesn't exist, create one */
-	if (*tree == NULL)
+	if (tree == NULL || *tree == NULL)
 	{
-		*tree = binary_tree_node(*tree, value);
-		return (*tree);
+		new = binary_tree_node(NULL, value);
+		*tree = new;
+		return (new);
 	}
 
-	/* find parent node for new node */
-	parent = recurse_for_bst_insert(*tree, value);
+	tree_2 = *tree;
 
-	if (parent) /* if parent was found, create new node*/
-		new_node = binary_tree_node(parent, value);
-	else
-		return (NULL);
-
-	/* point parent to new node */
-	if (value < parent->n)
-		parent->left = new_node;
-	else
-		parent->right = new_node;
-
-	return (new_node);
-}
-/**
- * recurse_for_bst_insert - recursively search tree
- * @tree: pointer to root of tree/subtree
- * @value: value being added
- *
- * Return: pointer to parent of new node; NULL on failure
- */
-bst_t *recurse_for_bst_insert(bst_t *tree, int value)
-{
-	if (!tree)
-		return (NULL);
-
-	/* if value is less than that in node */
-	if (value < tree->n)
+	while (tree_2 != NULL)
 	{
-		if (tree->left != NULL)
-			return (recurse_for_bst_insert(tree->left, value));
-		else
-			return (tree);
-	}
-
-	/* if value is greater than that in node */
-	else if (value > tree->n)
-	{
-		if (tree->right != NULL)
+		if (tree_2->n == value)
+			return (NULL);
+		if (tree_2->n > value)
 		{
-			return (recurse_for_bst_insert(tree->right, value));
+			if (tree_2->left == NULL)
+			{
+				tree_2->left = binary_tree_node(tree_2, value);
+				return (tree_2->left);
+			}
+			tree_2 = tree_2->left;
 		}
-		else
-			return (tree);
+		if (tree_2->n < value)
+		{
+			if (tree_2->right == NULL)
+			{
+				tree_2->right = binary_tree_node(tree_2, value);
+				return (tree_2->right);
+			}
+			tree_2 = tree_2->right;
+		}
 	}
-
-	/* will reach if value is equal to value in current node */
 	return (NULL);
 }

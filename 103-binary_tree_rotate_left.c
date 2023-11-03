@@ -1,47 +1,31 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_rotate_left - Performs a left rotation on a binary tree
- * @tree: A pointer to the root node of the tree to rotate
- *
- * Return: A pointer to the new root node of the tree after rotation
+ * binary_tree_rotate_left - performs a left rotation on a binary tree
+ * @tree: a pointer to the root node
+ * Return: the pointer to new node
  */
+
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree)
 {
-	binary_tree_t *new = NULL, *root = NULL;
+	binary_tree_t *newroot, *newrootleftchild, *parent;
 
-	/* if root node is NULL */
-	if (tree == NULL)
+	if (tree == NULL || tree->right == NULL)
 		return (tree);
 
-	/* if root node has no children */
-	if ((tree->left == NULL) && (tree->right == NULL))
-		return (tree);
+	/*storing the ref of the nodes invloved */
+	parent = tree;
+	newroot = tree->right;
+	newrootleftchild = newroot->left;
 
-	/* set pointer to new root */
-	new = tree->right;
-	/* set pointer to new root's left child */
-	tree->right = new->left;
-	/* if a new root's left child is valid, then */
-	/* new root will become the tree */
-	if (new->left != NULL)
-		new->left->parent = tree;
-	/* swap parents */
-	new->parent = tree->parent;
-	/* if there's no parent, current root will point to new root */
-	/* else if current root's parent has a left child, point it to new root */
-	/* all else, point current root's parent's right child to new root */
-	if (tree->parent == NULL)
-		root = new;
-	else if (tree == tree->parent->left)
-		tree->parent->left = new;
-	else
-		tree->parent->right = new;
-	/* move tree to the left of new */
-	new->left = tree;
-	tree->parent = new;
-	/* if current root is not NULL, return it, otherwise return new root*/
-	if (root)
-		return (root);
-	return (new);
+	/* rotating left */
+	parent->right = newrootleftchild;
+	if (newrootleftchild != NULL)
+		newrootleftchild->parent = parent;
+
+	newroot->left = parent;
+	newroot->parent = parent->parent;
+	parent->parent = newroot;
+
+	return (newroot);
 }

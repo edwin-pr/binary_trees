@@ -1,54 +1,51 @@
 #include "binary_trees.h"
-int recurse_for_complete(const binary_tree_t *tree, size_t index, size_t size);
-size_t binary_tree_size(const binary_tree_t *tree);
+
 /**
- * binary_tree_is_complete - check if tree is complete
- * @tree: pointer to root of tree
- *
- * Return: 1 if complete; 0 if incomplete
+ * binary_tree_size - counts the number of nodes in the binary tree
+ * @root: pointer to the root node of the tree
+ * Return: Number of nodes in the binary tree
  */
-int binary_tree_is_complete(const binary_tree_t *tree)
+
+size_t binary_tree_size(const binary_tree_t *root)
 {
-	if (!tree)
+	if (root == NULL)
 		return (0);
-
-	return (recurse_for_complete(tree, 0, binary_tree_size(tree)));
+	return (1 + binary_tree_size(root->left) + binary_tree_size(root->right));
 }
-/**
- * recurse_for_complete - use array indexing to track node position
- * @tree: pointer to root of tree
- * @index: index of node in conceptual array
- * @size: number of nodes in tree
- *
- * Return: 1 if complete; 0 if incomplete
- */
-int recurse_for_complete(const binary_tree_t *tree, size_t index, size_t size)
-{
-	int left, right;
 
-	if (!tree)
+/**
+ * is_complete_recursive - Recursive helper function
+ * @root: pointer to the root of the node
+ * @index: Index of the current node
+ * @size: total number of node in the tree
+ * Return: 1 if the tree is complete || 0 on failure
+ */
+
+int is_complete_recursive(const binary_tree_t *root, size_t index, size_t size)
+{
+	if (root == NULL)
 		return (1);
 
 	if (index >= size)
 		return (0);
 
-	left = recurse_for_complete(tree->left, (2 * index) + 1, size);
-	right = recurse_for_complete(tree->right, (2 * index) + 2, size);
-
-	if (left == 1 && right == 1)
-		return (1);
-	else
-		return (0);
+	return (is_complete_recursive(root->left, 2 * index + 1, size) &&
+		is_complete_recursive(root->right, 2 * index + 2, size));
 }
+
 /**
- * binary_tree_size - measure size of binary tree
- * @tree: tree to measure
- *
- * Return: size
+ * binary_tree_is_complete - checks if a binary tree is complete
+ * @tree: pointer to the node
+ * Return: 0 if tree is NULL
  */
-size_t binary_tree_size(const binary_tree_t *tree)
+
+int binary_tree_is_complete(const binary_tree_t *tree)
 {
-	if (tree)
-		return (binary_tree_size(tree->left) + 1 + binary_tree_size(tree->right));
-	return (0);
+	size_t size;
+
+	if (tree == NULL)
+		return (0);
+
+	size = binary_tree_size(tree);
+	return (is_complete_recursive(tree, 0, size));
 }
