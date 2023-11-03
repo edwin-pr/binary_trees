@@ -109,4 +109,3 @@ bst_t *recurse_for_bst_insert(bst_t *tree, int value)
 	/* will reach if value is equal to value in current node */
 	return (NULL);
 }
-
