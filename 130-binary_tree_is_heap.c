@@ -5,12 +5,10 @@ size_t binary_tree_size(const binary_tree_t *tree);
 int helper_is_heap(const binary_tree_t *tree);
 
 /**
- * binary_tree_is_heap - checks for max binary heap
+ * binary_tree_is_heap - function that checks for max binary heap
  * @tree: pointer to the root node
  * Description: 36. Is Binary heap
- * Return: see below
- * 1. upon success, return 1
- * 2. upon fail, return 0
+ * Return: upon success, return 1, otherwise return 0
  */
 int binary_tree_is_heap(const binary_tree_t *tree)
 {
@@ -25,9 +23,7 @@ int binary_tree_is_heap(const binary_tree_t *tree)
  * helper_is_heap - checks binary heap property
  * @tree: pointer to the root node
  * Description: 36. Is Binary heap
- * Return: see below
- * 1. upon success, return 1
- * 2. upon fail, return 0
+ * Return: upon success, return 1, otherwise return 0
  */
 int helper_is_heap(const binary_tree_t *tree)
 {
@@ -51,10 +47,10 @@ int helper_is_heap(const binary_tree_t *tree)
 }
 
 /**
- * binary_tree_is_complete - check if tree is complete
+ * binary_tree_is_complete -  Checks if tree is complete
  * @tree: pointer to root of tree
  *
- * Return: 1 if complete; 0 if incomplete
+ * Return: 1 if complete, 0 if incomplete
  */
 int binary_tree_is_complete(const binary_tree_t *tree)
 {
@@ -92,8 +88,8 @@ int recurse_for_complete(const binary_tree_t *tree, size_t index, size_t size)
 }
 
 /**
- * binary_tree_size - measure size of binary tree
- * @tree: tree to measure
+ * binary_tree_size -function measures size of binary tree
+ * @tree: tree to be used to measure
  *
  * Return: size
  */

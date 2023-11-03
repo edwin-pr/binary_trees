@@ -4,9 +4,9 @@
 #define INIT_NODE {0, NULL, NULL, NULL}
 
 /**
- * swap - swaps two nodes in binary tree
- * @a: first node
- * @b: second node
+ * swap - function that swaps two nodes in binary tree
+ * @a: the first node
+ * @b: the second node
  * Return: pointer to root
  */
 bst_t *swap(bst_t *a, bst_t *b)
@@ -92,7 +92,7 @@ size_t binary_tree_size(const binary_tree_t *tree)
 }
 
 /**
- * insert - helper func to insert node to correct location
+ * insert - helper function to insert node to correct location
  * @root: double pointer to root of max heap
  * @node: node to insert
  */
@@ -134,7 +134,7 @@ void insert(heap_t **root, heap_t *node)
 
 
 /**
- * heap_insert - inserts a value in Max Binary Heap
+ * heap_insert -function inserts a value in Max Binary Heap
  * @root: double pointer to root of tree
  * @value: input value
  * Return: pointer to the created node, or NULL on failure

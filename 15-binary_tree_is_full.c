@@ -1,31 +1,28 @@
 #include "binary_trees.h"
-int recurse_full(const binary_tree_t *tree);
+
 /**
- * binary_tree_is_full - check if tree is full
- * @tree: pointer to root of tree
+ * binary_tree_is_full - checks if a binary tree is full
+ * @tree: pointer to the root node
  *
- * Return: 1 if full; 0 if not full
+ * full means a node has either zero or two children
+ *
+ * Return: 0 if tree is NULL
  */
+
 int binary_tree_is_full(const binary_tree_t *tree)
 {
-	if (!tree)
+	if (tree == NULL)
 		return (0);
 
-	return (recurse_full(tree));
-}
-/**
- * recurse_full - recursive component of full check
- * @tree: root of tree
- *
- * Return: 1 if full, 0 if not full
- */
-int recurse_full(const binary_tree_t *tree)
-{
-	if (!tree)
-		return (0);
-	else if (!tree->left && !tree->right)
+	/* node has no children */
+	if (tree->left == NULL && tree->right == NULL)
 		return (1);
-	else
-		return (recurse_full(tree->left) * recurse_full(tree->right));
-}
 
+	/* if node has two children continue checking recursively */
+	if (tree->left != NULL && tree->right != NULL)
+		return (binary_tree_is_full(tree->left) &&
+				binary_tree_is_full(tree->right));
+
+	/* if node has only one child it's not full */
+	return (0);
+}

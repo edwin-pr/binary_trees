@@ -1,70 +1,43 @@
 #include "binary_trees.h"
 
-size_t recurse_for_height(const binary_tree_t *tree);
-
 /**
  * binary_tree_balance - measures the balance factor of a binary tree
- * @tree: pointer to node to measure the balance factor
- * Description: 14. Balance factor
- * Return: see below
- * 1. upon success, return balance factor
- * 2. upon fail, return 0
+ * @tree: pointer to the root node
+ * Return: 0 if tree is NULL
  */
+
 int binary_tree_balance(const binary_tree_t *tree)
 {
-	/* declare and initialize variables to calculate the heights */
-	int left = 0;
-	int right = 0;
+	size_t leftheight, rightheight;
 
-	/* base case */
 	if (tree == NULL)
-	{
 		return (0);
-	}
 
-	/* if given node has no balance factor */
-	if ((tree->left == NULL) && (tree->right == NULL))
-	{
-		return (0);
-	}
+	leftheight = binary_tree_height(tree->left);
+	rightheight = binary_tree_height(tree->right);
 
-	/* calculate height of left and right subtrees */
-	left = binary_tree_height(tree->left);
-	right = binary_tree_height(tree->right);
-
-	/* balance factor = left height - right height */
-	return (left - right);
+	return (leftheight - rightheight);
 }
 
 /**
- * binary_tree_height - measure height of tree
- * @tree: tree to measure
- *
- * Return: height
+ * binary_tree_height - calculate height of a binary tree
+ * @tree: pointer to the root node
+ * Return: 0 on failure || height of the tree
  */
+
 size_t binary_tree_height(const binary_tree_t *tree)
 {
-	return (recurse_for_height(tree) - 1);
-}
+	size_t leftheight = 0;
+	size_t rightheight = 0;
 
-/**
- * recurse_for_height - measure height
- * @tree: tree to measure
- *
- * Return: height
- */
-size_t recurse_for_height(const binary_tree_t *tree)
-{
-	size_t heightR, heightL;
-
-	if (!tree)
+	if (tree == NULL)
 		return (0);
 
-	heightL = recurse_for_height(tree->left);
-	heightR = recurse_for_height(tree->right);
+	leftheight += 1 + binary_tree_height(tree->left);
+	rightheight += 1 + binary_tree_height(tree->right);
 
-	if (heightL > heightR)
-		return (heightL + 1);
+	if (leftheight > rightheight)
+		return (leftheight);
 	else
-		return (heightR + 1);
+		return (rightheight);
 }
